@@ -1,0 +1,9 @@
+---
+name: arista
+description: Arista Ingegration Pack
+version: 0.1.0
+python_versions:
+  - "3"
+author: Nobuchika Tanaka
+email: codequokka@gmail.com
+# contributors:

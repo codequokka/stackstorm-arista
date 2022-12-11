@@ -1,0 +1,45 @@
+---
+name: search_logs
+pack: arista
+runner_type: python-script
+description: Search logs from show logging result
+enabled: true
+entry_point: python-scripts/search_logs.py
+parameters:
+  hostname:
+    type: string
+    description: A host name to execute commands
+    default: 192.168.1.129
+    required: true
+
+  port:
+    type: integer
+    description: A port number to execute commands
+    default: 10443
+    required: true
+
+  user:
+    type: string
+    description: A user name to execute commands
+    default: admin
+    required: true
+
+  password:
+    type: string
+    description: A password to execute commands
+    default: arista
+    required: true
+
+  pattern:
+    type: string
+    description: A string to filter logs
+    default: "%LINEPROTO-5-UPDOWN"
+    required: true
+
+  # commands:
+  #   type: array
+  #   description: commands to execute
+  #   default:
+  #     - show version
+  #     - show clock
+  #   required: true
