@@ -8,14 +8,14 @@ entry_point: python-scripts/check_login.py
 parameters:
   hostname:
     type: string
-    description: A host name to log in to
-    default: 192.168.1.129
+    description: A host name or IP address to log in to
+    default: localhost
     required: true
 
   port:
     type: integer
-    description: A port number to log in to
-    default: 10123
+    description: A telnet port number to log in to
+    default: 23
     required: true
 
   user:
@@ -26,6 +26,7 @@ parameters:
 
   password:
     type: string
-    description: A password to log in to
+    description: A password for user to log in to
     default: arista
     required: true
+    secret: true
