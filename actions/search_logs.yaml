@@ -2,44 +2,58 @@
 name: search_logs
 pack: arista
 runner_type: python-script
-description: Search logs from show logging result
+description: Search logs from the result of show logging
 enabled: true
 entry_point: python-scripts/search_logs.py
 parameters:
   hostname:
     type: string
-    description: A host name to execute commands
-    default: 192.168.1.129
+    description: A hostname where logs are searched
+    default: localhost
     required: true
 
   port:
     type: integer
-    description: A port number to execute commands
-    default: 10443
+    description: A port number to access eAPI
+    default: 443
     required: true
 
   user:
     type: string
-    description: A user name to execute commands
+    description: An user name to access eAPI
     default: admin
     required: true
 
   password:
     type: string
-    description: A password to execute commands
+    description: A password to access eAPI
     default: arista
     required: true
+    secret: true
 
-  pattern:
+  format:
     type: string
-    description: A string to filter logs
-    default: "%LINEPROTO-5-UPDOWN"
+    description: A format in returning logs
+    enum:
+      - list
+      - string
+    default: list
     required: true
 
-  # commands:
-  #   type: array
-  #   description: commands to execute
-  #   default:
-  #     - show version
-  #     - show clock
-  #   required: true
+  filter_string:
+    type: string
+    description: A string to filter logs
+    default: ""
+    required: true
+
+  filter_start_datetime:
+    type: string
+    description: Start datetime to filter logs (10 mins before current datetime if not specified)
+    # default: "2022/12/19 00:00:00 +0900"
+    required: false
+
+  filter_end_datetime:
+    type: string
+    description: End datetime to filter logs (10 mins after start datetime if not specified)
+    # default: "2022/12/19 00:10:00 +0900"
+    required: false

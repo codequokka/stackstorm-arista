@@ -2,37 +2,38 @@
 name: execute_commands
 pack: arista
 runner_type: python-script
-description: Execute commands vie eAPI
+description: Execute any commands via eAPI
 enabled: true
 entry_point: python-scripts/execute_commands.py
 parameters:
   hostname:
     type: string
-    description: A host name to execute commands
-    default: 192.168.1.129
+    description: A hostname where commands are executed
+    default: localhost
     required: true
 
   port:
     type: integer
-    description: A port number to execute commands
-    default: 10443
+    description: A port number to access eAPI
+    default: 443
     required: true
 
   user:
     type: string
-    description: A user name to execute commands
+    description: An user name to access eAPI
     default: admin
     required: true
 
   password:
     type: string
-    description: A password to execute commands
+    description: A password to access eAPI
     default: arista
     required: true
+    secret: true
 
   format:
     type: string
-    description: A password to execute commands
+    description: A format in returing result
     enum:
       - json
       - text
@@ -41,7 +42,7 @@ parameters:
 
   commands:
     type: array
-    description: commands to execute
+    description: Commands to be executed on the host
     default:
       - show version
       - show clock
