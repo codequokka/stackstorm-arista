@@ -1,16 +1,8 @@
 {
     "recommendations": [
-        "ms-python.isort",
         "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-toolsai.jupyter",
-        "ms-toolsai.jupyter-keymap",
-        "ms-toolsai.jupyter-renderers",
-        "ms-toolsai.vscode-jupyter-cell-tags",
-        "ms-toolsai.vscode-jupyter-slideshow",
+        "VisualStudioExptTeam.vscodeintellicode",
         "njpwerner.autodocstring",
-        "redhat.vscode-yaml",
-        "VisualStudioExptTeam.intellicode-api-usage-examples",
-        "VisualStudioExptTeam.vscodeintellicode"
+        "redhat.vscode-yaml"
     ]
 }

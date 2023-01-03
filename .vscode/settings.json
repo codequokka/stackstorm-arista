@@ -1,21 +1,37 @@
 {
     // Editor
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true
-    },
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
     // Python
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "python.analysis.extraPaths": [
+        ".venv/lib/python3.8/site-packages/",
+        "/opt/stackstorm/st2/lib/python3.8/site-packages/"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.languageServer": "Pylance",
     "python.linting.enabled": true,
-    "python.linting.lintOnSave": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [],
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
-        "--line-length",
-        "79"
+        "--line-length=79"
     ],
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.analysis.typeCheckingMode": "basic",
-    "python.analysis.diagnosticMode": "workspace",
-    //autoDocstring
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
     "autoDocstring.docstringFormat": "numpy",
+    // Yaml
+    "[yaml]": {
+        "editor.tabSize": 2
+    }
 }
