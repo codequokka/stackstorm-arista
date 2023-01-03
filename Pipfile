@@ -4,11 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
+requests = "==2.28.1"
 
 [dev-packages]
+isort = "*"
 black = "*"
 flake8 = "*"
+mypy = "*"
+types-requests = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.8"
