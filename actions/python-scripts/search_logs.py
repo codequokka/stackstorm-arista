@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+import re
 
 from lib.datetime import get_current_datetime, parse_datetime
 from lib.eapi import execute_commands
@@ -35,7 +36,6 @@ class SearchLogsAction(Action):  # type: ignore
         for result in logs.splitlines():
             if fqdn in result:
                 datetime_str, message = result.split(fqdn)
-                # datetime_str, message = result.split(fqdn)
 
                 datetime_str = datetime_str.rstrip()
                 message = message.lstrip()
@@ -55,7 +55,7 @@ class SearchLogsAction(Action):  # type: ignore
     def __filter_logs(
         self,
         structured_logs: list[StructuredLog],
-        filter_string: str,
+        filter_pattern: str,
         filter_start_datetime_str: str | None,
         filter_end_datetime_str: str | None,
     ) -> list[StructuredLog]:
@@ -66,8 +66,8 @@ class SearchLogsAction(Action):  # type: ignore
         ----------
         structured_logs : list[StructuredLog]
             A list of Structured log dictionaries
-        filter_string : str
-            A string to filter logs
+        filter_pattern : str
+            A regex pattern to filter logs
         filter_start_datetime: str | None
             description: Start datetime to filter logs
             (10 mins before current datetime if not specified)
@@ -86,7 +86,8 @@ class SearchLogsAction(Action):  # type: ignore
         """
         filtered_logs = list(
             filter(
-                lambda log: filter_string in log["message"], structured_logs
+                lambda log: re.search(filter_pattern, log["message"]),
+                structured_logs,
             )
         )
 
@@ -148,10 +149,10 @@ class SearchLogsAction(Action):  # type: ignore
         user: str,
         password: str,
         format: str,
-        filter_string: str,
+        filter_pattern: str,
         filter_start_datetime: str | None = None,
         filter_end_datetime: str | None = None,
-    ) -> tuple[bool, list[StructuredLog] | str]:  # TODO: Use TypedDict
+    ) -> tuple[bool, list[StructuredLog] | str]:
         """
         Parameters
         ----------
@@ -165,8 +166,8 @@ class SearchLogsAction(Action):  # type: ignore
             A password to access eAPI
         format: str
             A format in returning logs
-        filter_string : str
-            A string to filter logs
+        filter_pattern : str
+            A regex pattern to filter logs
         filter_start_datetime: Union[str, None]
             Start datetime to filter logs
             (10 mins before current datetime if not specified)
@@ -194,7 +195,7 @@ class SearchLogsAction(Action):  # type: ignore
 
         filtered_logs = self.__filter_logs(
             parsed_logs,
-            filter_string,
+            filter_pattern,
             filter_start_datetime,
             filter_end_datetime,
         )

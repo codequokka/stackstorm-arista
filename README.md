@@ -101,26 +101,26 @@ result:
 
 - arista.search_logs
 ```
-$ st2 run arista.search_logs hostname=192.168.1.238 port=10443 user=admin password=arista filter_string="%LINEPROTO-5-UPDOWN"
+$ st2 run arista.search_logs hostname=192.168.1.238 port=10443 user=admin password=arista filter_pattern="LINE"
 .
-id: 63b389d7018a290992abcf25
+id: 63b89e0165d6d29cd5fb9346
 action.ref: arista.search_logs
 context.user: st2admin
 parameters:
-  filter_string: '%LINEPROTO-5-UPDOWN'
+  filter_pattern: LINE
   hostname: 192.168.1.238
   password: '********'
   port: 10443
   user: admin
 status: succeeded
-start_timestamp: Tue, 03 Jan 2023 01:50:15 UTC
-end_timestamp: Tue, 03 Jan 2023 01:50:15 UTC
+start_timestamp: Fri, 06 Jan 2023 22:17:37 UTC
+end_timestamp: Fri, 06 Jan 2023 22:17:38 UTC
 result:
   exit_code: 0
   result:
-  - datetime: '2023-01-03T10:48:03+09:00'
+  - datetime: '2023-01-07T06:27:10+09:00'
     fqdn: cEOS-1
-    message: 'Ebra: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet1, changed state to down'
+    message: 'Ebra: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet1, changed state to up'
   stderr: ''
   stdout: ''
 ```
