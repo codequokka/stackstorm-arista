@@ -40,9 +40,9 @@ parameters:
     default: list
     required: true
 
-  filter_string:
+  filter_pattern:
     type: string
-    description: A string to filter logs
+    description: A regex pattern to filter logs
     default: ""
     required: true
 
