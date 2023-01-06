@@ -9,17 +9,18 @@ $ st2 pack install file:///opt/stackstorm/packs/arista
 ## Actions
 ```
 $ st2 action list -p arista
-+-------------------------+--------+--------------------------------------+
-| ref                     | pack   | description                          |
-+-------------------------+--------+--------------------------------------+
-| arista.check_login      | arista | Check login by using telnet          |
-| arista.execute_commands | arista | Execute commands vie eAPI            |
-| arista.search_logs      | arista | Search logs from show logging result |
-+-------------------------+--------+--------------------------------------+
++-------------------------+--------+-------------------------------------------+
+| ref                     | pack   | description                               |
++-------------------------+--------+-------------------------------------------+
+| arista.check_login      | arista | Check login by using telnet               |
+| arista.execute_commands | arista | Execute any commands via eAPI             |
+| arista.search_logs      | arista | Search logs from the result of show       |
+|                         |        | logging                                   |
++-------------------------+--------+-------------------------------------------+
 ```
 
 - arista.check_login
-```
+```shell
 $ st2 run arista.check_login hostname=192.168.1.238 port=10123 user=admin password=arista
 .
 id: 63b368fc018a290992abcee9
@@ -41,7 +42,7 @@ result:
 ```
 
 - arista.execute_commands
-```
+```shell
 $ st2 run arista.execute_commands hostname=192.168.1.238 port=10443 user=admin password=arista commands="show version, show clock"
 .
 id: 63b38187018a290992abcf0d
@@ -100,7 +101,7 @@ result:
 ```
 
 - arista.search_logs
-```
+```shell
 $ st2 run arista.search_logs hostname=192.168.1.238 port=10443 user=admin password=arista filter_pattern="LINE"
 .
 id: 63b89e0165d6d29cd5fb9346
