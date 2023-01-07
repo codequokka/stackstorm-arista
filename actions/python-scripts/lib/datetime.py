@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta, timezone
 
+from dateutil.parser import parse
+
 JST = timezone(timedelta(hours=+9), "JST")
 
 
-def parse_datetime(datetime_str: str, datetime_format: str) -> datetime:
+def parse_datetime(datetime_str: str) -> datetime:
     """
     Parse a datetime string and return a datetime object
 
@@ -12,23 +14,15 @@ def parse_datetime(datetime_str: str, datetime_format: str) -> datetime:
     datetme_str : str
         A datetime string
 
-    datetme_format : str
-        A datetime format code
-
     returns
     -------
     datetime
         A datetime object
     """
-    parsed_datetime = datetime.strptime(datetime_str, datetime_format)
+    parsed_datetime = parse(datetime_str)
 
-    if parsed_datetime.year == 1900 and parsed_datetime.tzinfo is None:
-        start_year = 1900
-        current_year = datetime.now().year
-
-        parsed_datetime = parsed_datetime.replace(
-            year=parsed_datetime.year + (current_year - start_year), tzinfo=JST
-        )
+    if parsed_datetime.tzinfo is None:
+        parsed_datetime = parsed_datetime.replace(tzinfo=JST)
 
     return parsed_datetime
 
