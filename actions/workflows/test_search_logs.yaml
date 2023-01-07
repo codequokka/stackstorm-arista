@@ -1,0 +1,40 @@
+version: 1.0
+
+description: Test the seach_logs action
+
+input:
+  - hostname
+  - port
+  - user
+  - password
+  - format
+  - filter_pattern
+  - filter_start_datetime
+  - filter_end_datetime
+
+# vars:
+#   - filter_start_datetime: <% (now(offset => timespan(hours => 9)) - timespan(minutes => 60)).format("%Y/%m/%d %H:%M:%S %z") %>
+#   - filter_end_datetime: <% (now(offset => timespan(hours => 9))).format("%Y/%m/%d %H:%M:%S %z") %>
+
+tasks:
+  task1:
+    action: arista.search_logs
+    input:
+      hostname: <% ctx().hostname %>
+      port: <% ctx().port %>
+      user: <% ctx().user %>
+      password: <% ctx().password %>
+      format: <% ctx().format %>
+      filter_pattern: <% ctx().filter_pattern %>
+      filter_start_datetime: <% ctx().filter_start_datetime %>
+      filter_end_datetime: <% ctx().filter_end_datetime %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - search_logs: <% result() %>
+        do: noop
+
+output:
+  - seach_logs: <% ctx().search_logs %>
+  - filter_start_datetime: <% ctx().filter_start_datetime %>
+  - filter_end_datetime: <% ctx().filter_end_datetime %>

@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-import datetime
 import re
 
-from lib.datetime import get_current_datetime, parse_datetime
+from lib.datetime import parse_datetime
 from lib.eapi import execute_commands
 from lib.typeddicts import StructuredLog
 from st2actions.runners.pythonrunner import Action  # type: ignore
@@ -40,7 +39,7 @@ class SearchLogsAction(Action):  # type: ignore
                 datetime_str = datetime_str.rstrip()
                 message = message.lstrip()
 
-                datetime = parse_datetime(datetime_str, "%b %d %H:%M:%S")
+                datetime = parse_datetime(datetime_str)
 
                 parsed_logs.append(
                     {
@@ -69,11 +68,9 @@ class SearchLogsAction(Action):  # type: ignore
         filter_pattern : str
             A regex pattern to filter logs
         filter_start_datetime: str | None
-            description: Start datetime to filter logs
-            (10 mins before current datetime if not specified)
+            Start datetime to filter logs
         filter_end_datetime: str | None
             End datetime to filter logs
-            (10 mins after start datetime if not specified)
 
         Returns
         -------
@@ -91,31 +88,26 @@ class SearchLogsAction(Action):  # type: ignore
             )
         )
 
-        if filter_start_datetime_str:
-            filter_start_datetime = parse_datetime(
-                filter_start_datetime_str, "%Y/%m/%d %H:%M:%S %z"
-            )
-        else:
-            filter_start_datetime = (
-                get_current_datetime() - datetime.timedelta(minutes=10)
-            )
-
-        if filter_end_datetime_str:
-            filter_end_datetime = parse_datetime(
-                filter_end_datetime_str, "%Y/%m/%d %H:%M:%S %z"
-            )
-        else:
-            filter_end_datetime = filter_start_datetime + datetime.timedelta(
-                minutes=10
-            )
-
-        filtered_logs = list(
-            filter(
-                lambda log: filter_start_datetime <= log["datetime"]
-                and filter_end_datetime >= log["datetime"],
-                filtered_logs,
-            )
+        filter_start_datetime = (
+            parse_datetime(filter_start_datetime_str)
+            if filter_start_datetime_str
+            else None
         )
+
+        filter_end_datetime = (
+            parse_datetime(filter_end_datetime_str)
+            if filter_end_datetime_str
+            else None
+        )
+
+        if filter_start_datetime and filter_end_datetime:
+            filtered_logs = list(
+                filter(
+                    lambda log: filter_start_datetime <= log["datetime"]
+                    and filter_end_datetime >= log["datetime"],
+                    filtered_logs,
+                )
+            )
 
         return filtered_logs
 
@@ -170,11 +162,9 @@ class SearchLogsAction(Action):  # type: ignore
             A regex pattern to filter logs
         filter_start_datetime: Union[str, None]
             Start datetime to filter logs
-            (10 mins before current datetime if not specified)
             2022/12/19 00:00:00 +0900
         filter_end_datetime: Union[str, None]
             End datetime to filter logs
-            (10 mins after start datetime if not specified)
             2022/12/19 00:10:00 +0900
 
         Returns

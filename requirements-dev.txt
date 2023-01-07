@@ -2,4 +2,7 @@ isort
 black
 flake8
 mypy
+ipython
+yaql
 types-requests
+types-python-dateutil

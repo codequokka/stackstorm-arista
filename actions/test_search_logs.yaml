@@ -1,0 +1,59 @@
+---
+name: test_search_logs
+pack: arista
+runner_type: orquesta
+description: Test the seach_logs action
+enabled: true
+entry_point: workflows/test_search_logs.yaml
+parameters:
+  hostname:
+    type: string
+    description: A hostname where logs are searched
+    default: localhost
+    required: true
+
+  port:
+    type: integer
+    description: A port number to access eAPI
+    default: 10443
+    required: true
+
+  user:
+    type: string
+    description: An user name to access eAPI
+    default: admin
+    required: true
+
+  password:
+    type: string
+    description: A password to access eAPI
+    default: arista
+    required: true
+    secret: true
+
+  format:
+    type: string
+    description: A format in returning logs
+    enum:
+      - list
+      - string
+    default: list
+    required: true
+
+  filter_pattern:
+    type: string
+    description: A regex pattern to filter logs
+    default:
+    required: true
+
+  filter_start_datetime:
+    type: string
+    description: Start datetime to filter logs (60 mins before current datetime if not specified)
+    default: <% (now(offset => timespan(hours => 9)) - timespan(minutes => 60)).format("%Y/%m/%d %H:%M:%S %z") %>
+    required: false
+
+  filter_end_datetime:
+    type: string
+    description: End datetime to filter logs (current datetime if not specified)
+    default: <% (now(offset => timespan(hours => 9))).format("%Y/%m/%d %H:%M:%S %z") %>
+    required: false
